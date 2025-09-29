@@ -1,7 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Vestige Projects</title>
 <style>
   html, body {
@@ -24,6 +25,11 @@
     font-weight: bold;
     margin: 0;
     text-shadow: 0 2px 3px #000000;
+    display: flex;
+    justify-content:space-between;
+    align-items: right;
+    vertical-align: middle;
+    flex-wrap: wrap;
   }
   h1 { color: #2c3e50; }
   h2 { color: #34495e; }
@@ -55,12 +61,32 @@
     background: #2f8ac6;
     color: white;
   }
+  .nav-links {
+    font-size: 80%;
+    align-self: center;
+    white-space: nowrap;
+    word-spacing: 0.8em;
+    transition: all 0.2s ease;
+  }
+  .nav-links a {
+    text-decoration: none;
+    transition: all 0.2s ease;
+  }
+
+  .nav-links a:hover {
+    color: #3a9ada;
+    text-decoration: underline;
+  }
 </style>
 </head>
 <body>
 
 <div class="top-bar">
-  goldfishglory - making many mistakes
+  <div class="site-title">goldfishglory - making many mistakes</div>
+  <div class="nav-links">
+    <a href="/">Home</a>
+    <a href="/about">About</a>
+  </div>
 </div>
 
 <div class="content">
