@@ -58,5 +58,33 @@
   </ul>
 
   <h2>Downloads</h2>
-  <p>Download Vestige: <a href="../Vestige/StrippedRunTest2.zip" download>StrippedRunTest2.zip</a></p>
+  <p>Download Vestige: <a href="Vestige/StrippedRunTest2.zip" download>StrippedRunTest2.zip</a></p>
+
+  <h1>Game if you're bored</h1>
+  <p>Guess a number between 1 and 100!</p>
+  <input type="number" id="guess" placeholder="Enter your guess">
+  <button onclick="checkGuess()">Submit</button>
+  <p id="feedback"></p>
 </div>
+
+<script>
+  const targetNumber = Math.floor(Math.random() * 100) + 1;
+
+  function checkGuess() {
+    const userGuess = parseInt(document.getElementById('guess').value);
+    const feedback = document.getElementById('feedback');
+
+    if (isNaN(userGuess)) {
+      feedback.textContent = "Please enter a valid number!";
+      return;
+    }
+
+    if (userGuess === targetNumber) {
+      feedback.textContent = `🎉 Congrats! You guessed it right: ${targetNumber}`;
+    } else if (userGuess < targetNumber) {
+      feedback.textContent = "⬆️ Higher!";
+    } else {
+      feedback.textContent = "⬇️ Lower!";
+    }
+  }
+</script>
