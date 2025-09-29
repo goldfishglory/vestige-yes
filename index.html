@@ -60,31 +60,87 @@
   <h2>Downloads</h2>
   <p>Download Vestige: <a href="Vestige/StrippedRunTest2.zip" download>StrippedRunTest2.zip</a></p>
 
-  <h1>Game if you're bored</h1>
-  <p>Guess a number between 1 and 100!</p>
-  <input type="number" id="guess" placeholder="Enter your guess">
-  <button onclick="checkGuess()">Submit</button>
-  <p id="feedback"></p>
-</div>
+  <h2>⚪ Draggable Bouncing Circle</h2>
+  <p>Drag the circle and watch it bounce!</p>
+  <div id="circle"></div>
 
-<script>
-  const targetNumber = Math.floor(Math.random() * 100) + 1;
-
-  function checkGuess() {
-    const userGuess = parseInt(document.getElementById('guess').value);
-    const feedback = document.getElementById('feedback');
-
-    if (isNaN(userGuess)) {
-      feedback.textContent = "Please enter a valid number!";
-      return;
-    }
-
-    if (userGuess === targetNumber) {
-      feedback.textContent = `🎉 Congrats! You guessed it right: ${targetNumber}`;
-    } else if (userGuess < targetNumber) {
-      feedback.textContent = "⬆️ Higher!";
-    } else {
-      feedback.textContent = "⬇️ Lower!";
-    }
+  <style>
+    #circle {
+      width: 12px;
+      height: 12px;
+      background-color: #000000;
+      border-radius: 50%;
+      position: absolute;
+      top: 700px;
+      left: 100px;
+      cursor: grab;
   }
-</script>
+  </style>
+  
+  <script>
+  const circle = document.getElementById('circle');
+  let dragging = false;
+  let offsetX = 0;
+  let offsetY = 0;
+
+  let vx = 0;
+  let vy = 0;
+  const gravity = 0.2;
+  const bounce = -0.7; 
+
+  circle.addEventListener('mousedown', (e) => {
+      dragging = true;
+      offsetX = e.clientX - circle.offsetLeft;
+      offsetY = e.clientY - circle.offsetTop;
+      circle.style.cursor = 'grabbing';
+  });
+
+  document.addEventListener('mouseup', () => {
+      dragging = false;
+      circle.style.cursor = 'grab';
+  });
+
+  document.addEventListener('mousemove', (e) => {
+      if (dragging) {
+        circle.style.left = (e.clientX - offsetX) + 'px';
+        circle.style.top = (e.clientY - offsetY) + 'px';
+        vx = vy = 0;
+      }
+  });
+
+  function updatePhysics() {
+    if (!dragging) {
+      let circleRect = circle.getBoundingClientRect();
+      let width = window.innerWidth;
+      let height = window.innerHeight;
+
+      vy += gravity;
+      let newX = circle.offsetLeft + vx;
+      let newY = circle.offsetTop + vy;
+
+      if (newX <= 0) {
+          newX = 0;
+          vx *= bounce;
+      } else if (newX + circleRect.width >= width) {
+          newX = width - circleRect.width;
+          vx *= bounce;
+      }
+  
+      if (newY <= 0) {
+          newY = 0;
+          vy *= bounce;
+      } else if (newY + circleRect.height >= height) {
+          newY = height - circleRect.height;
+          vy *= bounce;
+      }
+
+      circle.style.left = newX + 'px';
+      circle.style.top = newY + 'px';
+      }
+  
+      requestAnimationFrame(updatePhysics);
+  }
+
+  updatePhysics();
+  </script>
+</div>
